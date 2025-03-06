@@ -1,1 +1,1 @@
-Test one
+These are final graduation projects for undergraduate students at the University of Juba
