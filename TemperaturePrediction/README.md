@@ -44,3 +44,5 @@ This project is open-source and available under the MIT License.
 
 For questions or contributions, feel free to open an issue or submit a pull request!
 
+
+*Developed by Deng, Alier (5th Year Students, School of Computer Science and Information Technology - The University of Juba) and Manzu Gerald Ph.D (Lecturer, University of Juba - School of Computer Science and information Technology)*

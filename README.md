@@ -86,3 +86,5 @@ This repository is open-source under the MIT License.
 
 For any questions or contributions, feel free to open an issue or submit a pull request!
 
+*Implemented and Developed by Deng, Alier, Anthony (5th Year Students, School of Computer Science and Information Technology - The University of Juba) and Manzu Gerald Ph.D (Lecturer, University of Juba - School of Computer Science and information Technology)*
+

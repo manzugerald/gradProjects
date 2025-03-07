@@ -128,6 +128,12 @@ This project explores two approaches to Named Entity Recognition using the CoNLL
 All plots and evaluation results are saved for further analysis, showcasing the strengths of each model in NER tasks.
 
 ---
+## License
+This project is open-source and available under the MIT License.
+
+---
+
+For questions or contributions, feel free to open an issue or submit a pull request!
 
 *Developed by Anthony Bush (5th Year Student, School of Computer Science and Information Technology - The University of Juba) and...*
 
