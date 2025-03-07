@@ -44,7 +44,7 @@ This project applies Named Entity Recognition (NER) using two machine learning a
 - **Random Forest:** Effective for feature-based classification.
 
 ## 2. Temperature Time Series Prediction
-This project forecasts temperature trends using Holt-Winters and ARIMA models with a dataset spanning from 1920 to 2025.
+This project forecasts temperature trends using Holt-Winters and ARIMA models with a dataset spanning from 1920 to 2022.
 
 ### Features
 - Preprocessing: Outlier removal with rolling mean and exponential smoothing.
@@ -67,7 +67,7 @@ pip install pandas numpy matplotlib seaborn statsmodels scikit-learn
 - **Splits:**
   - Training: 1920-2012
   - Validation: 2013-2022
-  - Testing: 2023-2025
+  - Future Prediction: 2023-2030
 
 ### Model Training & Evaluation
 - **Holt-Winters:** Captures seasonal trends.
