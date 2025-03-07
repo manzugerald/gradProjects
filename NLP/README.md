@@ -1,143 +1,133 @@
 # Named Entity Recognition (NER) with CRF and Random Forest
 
-This project implements Named Entity Recognition (NER) using two machine learning models—Conditional Random Fields (CRF) and Random Forest—on the CoNLL-2003 dataset. The goal is to classify tokens in text into predefined NER categories (e.g., "B-PER", "I-LOC", "O"). Below is a summary of the work done for each model, including data preparation, training, evaluation, visualization, and the libraries used.
+This repository implements Named Entity Recognition (NER) using two machine learning models: Conditional Random Fields (CRF) and Random Forest. The models are trained on the CoNLL-2003 dataset to classify tokens into predefined NER categories such as "B-PER", "I-LOC", and "O". The project includes data preparation, feature extraction, model training, evaluation, and visualization.
 
 ## Dataset
 
-The CoNLL-2003 dataset is used for both models, sourced from the Hugging Face Datasets library (`datasets.load_dataset("conll2003")`). This dataset, originally from the Conference on Computational Natural Language Learning (CoNLL) 2003 shared task, contains English text annotated with named entities (Person, Location, Organization, Miscellaneous) and is split into training, validation, and test sets. It is accessed via:
+The CoNLL-2003 dataset, sourced from the Hugging Face Datasets library (`datasets.load_dataset("conll2003")`), is used for both models. It consists of English text annotated with named entities—Person, Location, Organization, and Miscellaneous. The dataset is split into training, validation, and test sets:
 
-- **CRF**: Loaded fully into memory without streaming.
+- **CRF**: Loaded entirely into memory.
 - **Random Forest**: Loaded with streaming enabled for memory efficiency.
 
-## Common Libraries
+## Common Dependencies
 
-The following libraries are used by both models:
+Both models utilize the following libraries:
 
-- `matplotlib.pyplot`: For creating plots (e.g., bar plots, heatmaps).
-- `seaborn`: For enhanced visualizations with better aesthetics.
-- `numpy`: For numerical operations and array handling.
-- `datasets`: To load the CoNLL-2003 dataset from Hugging Face.
-- `sklearn.metrics`: For evaluation metrics (classification_report, confusion_matrix, precision_recall_curve, auc).
-- `collections.Counter`: For counting NER tag occurrences.
-- `os`: For directory handling and file saving.
+- `matplotlib.pyplot`: For generating plots.
+- `seaborn`: For visualizing data distributions and evaluation metrics.
+- `numpy`: For numerical operations.
+- `datasets`: For loading the CoNLL-2003 dataset.
+- `sklearn.metrics`: For computing classification metrics.
+- `collections.Counter`: For counting occurrences of NER tags.
+- `os`: For handling file storage and directories.
 
 ## CRF Model
 
 ### Overview
 
-The CRF model leverages sequence labeling to predict NER tags, capturing dependencies between adjacent tokens.
+The CRF model employs sequence labeling to predict NER tags while capturing dependencies between adjacent tokens.
 
-### Libraries Specific to CRF
+### Key Libraries
 
-- `sklearn_crfsuite.CRF`: Implementation of the Conditional Random Field model for sequence labeling.
+- `sklearn_crfsuite.CRF`: Implementation of Conditional Random Fields for sequence labeling.
 
-### Pipeline
+### Implementation Pipeline
 
-#### Data Loading:
-- Loaded CoNLL-2003 dataset fully into memory using datasets.
-- Extracted token lists (`X_train`, `X_val`, `X_test`) and NER tag lists (`y_train`, `y_val`, `y_test`) for each split.
+1. **Data Loading**
+   - Entire dataset loaded into memory.
+   - Extracted token and NER tag sequences.
 
-#### Feature Extraction:
-- Extracted features for each word (e.g., lowercase, suffixes, case, digit status, previous/next word features, BOS/EOS markers) using pure Python logic.
+2. **Feature Extraction**
+   - Extracted features such as lowercase form, suffixes, case patterns, digit presence, and context-based information.
 
-#### Training:
-- Trained a CRF model with `sklearn_crfsuite.CRF` using the L-BFGS algorithm, L1/L2 regularization (`c1=0.1`, `c2=0.1`), 100 iterations, and all possible transitions enabled.
+3. **Training**
+   - Trained CRF using `sklearn_crfsuite.CRF` with L-BFGS optimization, L1/L2 regularization (`c1=0.1`, `c2=0.1`), and 100 iterations.
 
-#### Evaluation:
-- Generated predictions for all splits using `CRF.predict`.
-- Produced classification reports with `sklearn.metrics.classification_report`.
-- Visualized performance with:
-  - Precision-Recall curves (for "B-PER", "I-PER", "B-LOC", "O") using marginal probabilities from `CRF.predict_marginals`, plotted with `matplotlib` and `seaborn`.
-  - Confusion matrices using `sklearn.metrics.confusion_matrix` and `seaborn.heatmap`.
+4. **Evaluation**
+   - Generated classification reports.
+   - Visualized results via:
+     - Precision-Recall curves.
+     - Confusion matrices.
+     - NER tag distribution plots.
+     - Transition feature visualization.
 
-#### Visualization:
-- Plotted NER tag distributions with `seaborn.barplot`.
-- Visualized top 20 transition weights between NER tags using `seaborn.barplot` and `CRF.transition_features_`.
-- Compared F1-scores across splits with `matplotlib.pyplot.bar`.
+5. **Visualization Styling**
+   - Titles: Font size 21.
+   - Axis Labels: Font size 18.
+   - Bar styling: `edgecolor="black"`, `linewidth=1.5`.
+   - All plots saved under `plots/CRF/`.
 
-### Plot Characteristics
-- Font Sizes: Title: 21, Axis Labels: 18, Ticks: 14.
-- Line Size: Precision-Recall curves use `linewidth=2.5`.
-- Bar Styling: Bars have `edgecolor="black"` and `linewidth=1.5`.
-- Storage: All plots saved in "plots/CRF/" with "CRF" appended (e.g., `NER_Tag_Distribution_in_Training_Set_CRF.png`) using `matplotlib.pyplot.savefig`.
+### Key Outcomes
 
-### Outcomes
-The CRF model effectively captures sequence dependencies, reflected in transition weight visualizations. Detailed performance metrics and plots are saved for analysis, highlighting strengths in specific NER categories.
+The CRF model effectively captures sequential dependencies, demonstrating strong performance in structured prediction tasks.
 
 ## Random Forest Model
 
 ### Overview
 
-The Random Forest model treats NER as a token-level classification task, using an ensemble of decision trees.
+The Random Forest model treats NER as a token-level classification problem, leveraging an ensemble of decision trees.
 
-### Libraries Specific to Random Forest
+### Key Libraries
 
-- `sklearn.ensemble.RandomForestClassifier`: Implementation of the Random Forest model.
-- `sklearn.preprocessing.LabelEncoder`: For encoding string NER tags to numeric values.
-- `sklearn.feature_extraction.DictVectorizer`: For converting feature dictionaries to sparse matrices.
-- `scipy.sparse`: For handling sparse matrices generated by `DictVectorizer`.
-- `gc`: For garbage collection to manage memory during streaming and vectorization.
+- `sklearn.ensemble.RandomForestClassifier`: Implementation of Random Forest.
+- `sklearn.preprocessing.LabelEncoder`: For encoding NER tags as numerical values.
+- `sklearn.feature_extraction.DictVectorizer`: For transforming feature dictionaries into sparse matrices.
+- `scipy.sparse`: For efficient matrix operations.
+- `gc`: For memory management during streaming and vectorization.
 
-### Pipeline
+### Implementation Pipeline
 
-#### Data Loading:
-- Loaded CoNLL-2003 dataset with streaming enabled using `datasets` to process data iteratively.
-- Extracted token and tag lists in chunks for memory efficiency.
+1. **Data Loading**
+   - Dataset loaded using streaming for memory efficiency.
+   - Processed in chunks.
 
-#### Feature Extraction:
-- Extracted features per word (e.g., lowercase, length, case, digit status, previous/next word) using pure Python logic, processed in chunks of 1000 examples.
+2. **Feature Extraction**
+   - Extracted features similar to CRF.
+   - Processed in chunks of 1000 samples.
 
-#### Vectorization:
-- Flattened feature lists and converted to sparse matrices with `DictVectorizer`.
-- Encoded NER tags to numeric values using `LabelEncoder`.
+3. **Vectorization**
+   - Features transformed into sparse matrices using `DictVectorizer`.
+   - Labels encoded using `LabelEncoder`.
 
-#### Training:
-- Trained a Random Forest with `RandomForestClassifier` (100 trees, balanced class weights, max depth of 30, parallel processing with `n_jobs=-1`).
+4. **Training**
+   - Trained `RandomForestClassifier` (100 trees, balanced class weights, max depth=30, `n_jobs=-1`).
 
-#### Evaluation:
-- Generated predictions for all splits using `RandomForestClassifier.predict`.
-- Produced classification reports with `sklearn.metrics.classification_report`.
-- Visualized performance with:
-  - Precision-Recall curves (for "B-PER", "I-PER", "B-LOC", "O") using probability scores from `RandomForestClassifier.predict_proba`, plotted with `matplotlib` and `seaborn`.
-  - Confusion matrices using `sklearn.metrics.confusion_matrix` and `seaborn.heatmap`.
+5. **Evaluation**
+   - Generated classification reports.
+   - Visualized results via:
+     - Precision-Recall curves.
+     - Confusion matrices.
+     - Feature importance plots.
 
-#### Visualization:
-- Plotted NER tag distributions with `seaborn.barplot`.
-- Visualized top 20 feature importances from `RandomForestClassifier.feature_importances_` using `seaborn.barplot`.
-- Compared F1-scores across splits with `matplotlib.pyplot.bar`.
+6. **Visualization Styling**
+   - Titles: Font size 21.
+   - Axis Labels: Font size 18.
+   - Bar styling: `edgecolor="black"`, `linewidth=1.5`.
+   - All plots saved under `plots/randomForest/`.
 
-### Plot Characteristics
-- Font Sizes: Title: 21, Axis Labels: 18, Ticks: 14.
-- Line Size: Precision-Recall curves use `linewidth=2.5`.
-- Bar Styling: Bars have `edgecolor="black"` and `linewidth=1.5`.
-- Storage: All plots saved in "plots/randomForest/" with "RandomForest_" prepended (e.g., `RandomForest_NER_Tag_Distribution_in_Training_Set.png`) using `matplotlib.pyplot.savefig`.
+### Key Outcomes
 
-### Outcomes
-The Random Forest model excels in feature-based classification, with feature importance plots highlighting key predictors. Memory-efficient streaming and chunk processing enable handling large datasets. Comprehensive evaluation plots and metrics are saved for further analysis.
+The Random Forest model provides robust feature-based classification, with feature importance plots offering insights into key predictors.
 
-## Common Elements
+## Comparison of CRF and Random Forest
 
-- **Dataset Source**: Both models use the CoNLL-2003 dataset from Hugging Face (`datasets` library).
-- **Visualization**: Both include NER distribution, Precision-Recall, Confusion Matrix, and F1-score comparison plots, with consistent styling using `matplotlib` and `seaborn`.
-- **Evaluation**: Both report detailed classification metrics with `sklearn.metrics` and save plots in dedicated directories ("plots/CRF/" and "plots/randomForest/") using `os`.
+| Aspect            | CRF Model                  | Random Forest Model            |
+|------------------|---------------------------|--------------------------------|
+| **Model Type**   | Sequence model (CRF)       | Token-level classifier (RF)    |
+| **Data Loading** | Entire dataset in memory  | Streaming for efficiency      |
+| **Feature Use**  | Context-aware features    | Token-specific features       |
+| **Unique Viz**   | Transition weights        | Feature importance ranking    |
 
-## Key Differences
+## Conclusion
 
-- **Model Type**: CRF is a sequence model (`sklearn_crfsuite.CRF`); Random Forest is a token-level classifier (`sklearn.ensemble.RandomForestClassifier`).
-- **Data Loading**: CRF loads fully; Random Forest streams data with `datasets`.
-- **Features**: CRF uses contextual features; Random Forest uses token-specific features with `DictVectorizer` vectorization.
-- **Unique Visualization**: CRF includes transition weights; Random Forest includes feature importances from `RandomForestClassifier`.
-- **Libraries**: CRF uses `sklearn_crfsuite`; Random Forest uses `sklearn.ensemble`, `sklearn.preprocessing`, `sklearn.feature_extraction`, and `scipy.sparse`.
+This project explores two approaches to Named Entity Recognition using the CoNLL-2003 dataset:
 
-## Conclusion Remarks
+- **CRF**: Best suited for structured prediction with sequential dependencies.
+- **Random Forest**: Effective for scalable token classification with feature-based importance.
 
-This project demonstrates two approaches to NER using the CoNLL-2003 dataset from Hugging Face:
-
-- **CRF**: Captures sequence dependencies with `sklearn_crfsuite`, ideal for structured prediction tasks.
-- **Random Forest**: Leverages feature importance and parallel processing with `sklearn.ensemble`, suitable for large-scale token classification.
-
-All plots and metrics are locally saved for detailed analysis into model performance and dataset characteristics using a robust set of Python libraries.
+All plots and evaluation results are saved for further analysis, showcasing the strengths of each model in NER tasks.
 
 ---
 
-*Note: This project was worked on by Anthony Bush (5th Year student, School of Computer Science and Information Technology - The University of Juba) and Manzu Gerald Ph.D (Lecturer, The University of Juba, School of Computer Science and Information Technology).*
+*Developed by Anthony Bush (5th Year Student, School of Computer Science and Information Technology - The University of Juba) and...*
+
