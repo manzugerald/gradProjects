@@ -5,11 +5,6 @@ This repository contains three projects:
 2. **Temperature Time Series Prediction** - Forecasts temperature data using Holt-Winters and ARIMA models.
 3. **Urban Growth Prediction of Juba (2024-2033)** - Predicts land cover changes in Juba, South Sudan, using Random Forest on Landsat imagery.
 
-
-This repository contains two projects:
-1. **Named Entity Recognition (NER) using CRF and Random Forest** - Implements NER using Conditional Random Fields (CRF) and Random Forest models on the CoNLL-2003 dataset.
-2. **Temperature Time Series Prediction** - Forecasts temperature data using Holt-Winters and ARIMA models.
-
 ## 1. Named Entity Recognition (NER) with CRF and Random Forest
 This project applies Named Entity Recognition (NER) using two machine learning approaches: CRF and Random Forest. The models classify tokens into predefined NER categories such as "B-PER", "I-LOC", and "O" using the CoNLL-2003 dataset.
 
