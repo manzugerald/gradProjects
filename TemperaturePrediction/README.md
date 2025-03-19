@@ -1,4 +1,4 @@
-# Temperature Time Series Prediction
+# Temperature Time Series Prediction using Holt-Winters and ARIMA
 
 This project implements time series forecasting for temperature data using Holt-Winters and ARIMA models. The dataset spans from 1920 to 2025, with training, validation, and testing splits.
 

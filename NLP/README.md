@@ -1,4 +1,4 @@
-# Named Entity Recognition (NER) with CRF and Random Forest
+# Comparative performance of Traditional and Machine Learning Approaches Using the CoNLL-2003 Dataset
 
 This repository implements Named Entity Recognition (NER) using two machine learning models: Conditional Random Fields (CRF) and Random Forest. The models are trained on the CoNLL-2003 dataset to classify tokens into predefined NER categories such as "B-PER", "I-LOC", and "O". The project includes data preparation, feature extraction, model training, evaluation, and visualization.
 
