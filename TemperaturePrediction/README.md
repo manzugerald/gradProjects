@@ -38,11 +38,13 @@ The script generates and saves the following plots:
 - **Actual vs. Predicted** (`actual_vs_predicted.png`)
 
 ## License
-This project is open-source and available under the MIT License.
+This project is for academic and research purposes. Contact the authors for usage permissions.
 
----
+## Contact
+For questions or collaboration, reach out to:
+- Manzu Gerald, Ph.D.: manzugerald@gmail.com
+- Alier Ajak Achuek : alierajak19@gmail.com
+- Deng John Akhok : dengjohnakhok@gmail.com
 
-For questions or contributions, feel free to open an issue or submit a pull request!
 
-
-*Implemented and Developed by Deng, Alier (5th Year Students, School of Computer Science and Information Technology - The University of Juba) and Manzu Gerald Ph.D (Lecturer, University of Juba - School of Computer Science and information Technology)*
+*Implemented and Developed by Deng John Akhok, and Alier Ajak Achuek (5th Year Students, School of Computer Science and Information Technology - The University of Juba) and Manzu Gerald Ph.D (Lecturer, University of Juba - School of Computer Science and information Technology)*

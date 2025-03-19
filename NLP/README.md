@@ -129,11 +129,12 @@ All plots and evaluation results are saved for further analysis, showcasing the 
 
 ---
 ## License
-This project is open-source and available under the MIT License.
+This project is for academic and research purposes. Contact the authors for usage permissions.
 
----
+## Contact
+For questions or collaboration, reach out to:
+- Manzu Gerald, Ph.D.: manzugerald@gmail.com
+- Benson Nyombe Jalle: jallebenie@gmail.com
 
-For questions or contributions, feel free to open an issue or submit a pull request!
-
-*Implemented and Developed by Anthony Bush (5th Year Student, School of Computer Science and Information Technology - The University of Juba) and...*
+*Implemented and Developed by Anthony Bush (5th Year Student, School of Computer Science and Information Technology - The University of Juba) under the supervision of Manzu Gerald, Ph.D (Lecturer, University of Juba - School of Computer Science and information Technology)*
 

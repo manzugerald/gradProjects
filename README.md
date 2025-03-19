@@ -1,4 +1,10 @@
-# Named Entity Recognition (NER) and Temperature Time Series Prediction
+# Machine Learning Applications: NER, Temperature Forecasting, and Urban Growth Prediction
+
+This repository contains three projects:
+1. **Named Entity Recognition (NER) using CRF and Random Forest** - Implements NER using Conditional Random Fields (CRF) and Random Forest models on the CoNLL-2003 dataset.
+2. **Temperature Time Series Prediction** - Forecasts temperature data using Holt-Winters and ARIMA models.
+3. **Urban Growth Prediction of Juba (2024-2033)** - Predicts land cover changes in Juba, South Sudan, using Random Forest on Landsat imagery.
+
 
 This repository contains two projects:
 1. **Named Entity Recognition (NER) using CRF and Random Forest** - Implements NER using Conditional Random Fields (CRF) and Random Forest models on the CoNLL-2003 dataset.
@@ -81,10 +87,45 @@ pip install pandas numpy matplotlib seaborn statsmodels scikit-learn
   - **Training vs. Observed vs. Prediction:** `training_vs_observed_vs_prediction.png`
   - **Actual vs. Predicted:** `actual_vs_predicted.png`
 
-## License
-This repository is open-source under the MIT License.
 
-For any questions or contributions, feel free to open an issue or submit a pull request!
+## 3. A Machine Learning Approach to Urban Growth Prediction of Juba (2024-2033)
 
-*Implemented and Developed by Nyombe, Deng, Alier, Anthony (5th Year Students, School of Computer Science and Information Technology - The University of Juba) and Manzu Gerald Ph.D (Lecturer, University of Juba - School of Computer Science and information Technology)*
+## Project Overview
+This project aims to predict urban growth and land cover changes in Juba, South Sudan, from 2024 to 2033, using a Random Forest machine learning approach to analyze historical satellite data and forecast future trends in the region.
+
+## Dataset
+- **Source:** Landsat 5 (1994-2003) and Landsat 7 (2004-2023) imagery from Google Earth Engine.
+- **Classes:** Urban (built environments), Bare, Water, Vegetation.
+- **GCPs:** User-provided ground control points (e.g., `urban2003`, `urban2013`) for training.
+
+## Model
+- **Random Forest:** Uses `ee.Classifier.smileRandomForest(50)` with 50 trees.
+- **Features:** Spectral bands (SR_B1-SR_B7, ST_B6).
+- **Training:** Trained on historical GCPs.
+- **Evaluation:** Assessed via confusion matrices.
+
+## Features and Outputs
+- **Preprocessing:** Scales reflectance/thermal bands, masks clouds, creates median composites.
+- **Prediction:** Extrapolates spectral changes from 1994-2023 to simulate 2033 land cover.
+- **Outputs:** Classified maps, area statistics, growth rates, visualized via time series, bar, and pie charts.
+
+## Dependencies and Usage
+- **Dependencies:** Google Earth Engine (GEE) account and access.
+- **Usage:**
+  1. Upload ROI (`table2`) and GCPs to GEE assets.
+  2. Run the script in GEE Code Editor.
+  3. Export results to Google Drive (`jubaPredictionNew/`) via Tasks tab.
+
+## Contact
+For questions or collaboration, reach out to:
+### Supervisor
+- Supervisor Manzu Gerald, Ph.D.: manzugerald@gmail.com
+### Students
+- Benson Nyombe Jalle: jallebenie@gmail.com
+- Alier Ajak Achuek : alierajak19@gmail.com
+- Anthony Bush: anthonybush211@gmail.com
+- Deng John Akhok : dengjohnakhok@gmail.com
+
+*Implemented and Developed by Benson Nyombe, Deng John Akhok, Alier Ajak Achuek, Anthony Bush (5th Year Students, School of Computer Science and Information Technology - The University of Juba) under the supervision of Manzu Gerald, Ph.D (Lecturer, University of Juba - School of Computer Science and information Technology)*
+
 
