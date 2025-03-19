@@ -1,11 +1,11 @@
-# Machine Learning Applications: NER, Temperature Forecasting, and Urban Growth Prediction
+# Grad Projects - University of Juba
 
 This repository contains three projects:
-1. **Named Entity Recognition (NER) using CRF and Random Forest** - Implements NER using Conditional Random Fields (CRF) and Random Forest models on the CoNLL-2003 dataset.
-2. **Temperature Time Series Prediction** - Forecasts temperature data using Holt-Winters and ARIMA models.
-3. **Urban Growth Prediction of Juba (2024-2033)** - Predicts land cover changes in Juba, South Sudan, using Random Forest on Landsat imagery.
+1. **Comparative performance of Traditional and Machine Learning Approaches Using the CoNLL-2003 Dataset** - Implements NER using Conditional Random Fields (CRF) and Random Forest models on the CoNLL-2003 dataset.
+2. **Temperature Time Series Prediction using Holt-Winters and ARIMA** - Forecasts temperature data using Holt-Winters and ARIMA models.
+3. **A Machine Learning Approach to Urban Growth Prediction of Juba (2024-2033)** - Predicts land cover changes in Juba, South Sudan, using Random Forest on Landsat imagery.
 
-## 1. Named Entity Recognition (NER) with CRF and Random Forest
+## 1. Comparative performance of Traditional and Machine Learning Approaches Using the CoNLL-2003 Dataset
 This project applies Named Entity Recognition (NER) using two machine learning approaches: CRF and Random Forest. The models classify tokens into predefined NER categories such as "B-PER", "I-LOC", and "O" using the CoNLL-2003 dataset.
 
 ### Dataset
@@ -44,7 +44,7 @@ This project applies Named Entity Recognition (NER) using two machine learning a
 - **CRF:** Best for structured sequence prediction.
 - **Random Forest:** Effective for feature-based classification.
 
-## 2. Temperature Time Series Prediction
+## 2. Temperature Time Series Prediction using Holt-Winters and ARIMA
 This project forecasts temperature trends using Holt-Winters and ARIMA models with a dataset spanning from 1920 to 2022.
 
 ### Features
