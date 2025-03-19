@@ -134,7 +134,7 @@ This project is for academic and research purposes. Contact the authors for usag
 ## Contact
 For questions or collaboration, reach out to:
 - Manzu Gerald, Ph.D.: manzugerald@gmail.com
-- Benson Nyombe Jalle: jallebenie@gmail.com
+- Anthony Bush Castro: anthonybush211@gmail.com
 
 *Implemented and Developed by Anthony Bush (5th Year Student, School of Computer Science and Information Technology - The University of Juba) under the supervision of Manzu Gerald, Ph.D (Lecturer, University of Juba - School of Computer Science and information Technology)*
 
