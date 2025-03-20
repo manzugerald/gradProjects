@@ -1,7 +1,7 @@
 # Grad Projects - University of Juba
 
 This repository contains three projects:
-1. **Comparative performance of Traditional and Machine Learning Approaches Using the CoNLL-2003 Dataset** - Implements NER using Conditional Random Fields (CRF) and Random Forest models on the CoNLL-2003 dataset.
+1. **Comparative performance of Traditional and Machine Learning Approaches in Named Entity Recognition (NER) u the CoNLL-2003 Dataset** - Implements NER using Conditional Random Fields (CRF) and Random Forest models on the CoNLL-2003 dataset.
 2. **Temperature Time Series Prediction using Holt-Winters and ARIMA** - Forecasts temperature data using Holt-Winters and ARIMA models.
 3. **A Machine Learning Approach to Urban Growth Prediction of Juba (2024-2033)** - Predicts land cover changes in Juba, South Sudan, using Random Forest on Landsat imagery.
 
