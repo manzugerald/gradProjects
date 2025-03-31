@@ -168,7 +168,6 @@ print('Number of training samples (2014-2023):', training2023.size());
 print('Sample training data (2014-2023):', training2023.limit(5));
 Map.addLayer(composite20142023, {bands: ['SR_B3', 'SR_B2', 'SR_B1'], min: 0.0, max: 0.3}, 'Collection (2014-2023)');
 var result20142023 = classifyAndGetConfusionMatrix(composite20142023, training2023, '2014-2023');
-Map.addLayer(result20142023.classified, {min: 0, max: 3, palette: palette}, '2014-2023 Random Forest');
 var areas2023 = calculateAreas(result20142023.classified, '2014-2023');
 Export.image.toDrive({image: composite20142023, description: 'Collection_2014_2023', folder: 'jubaPredictionNew/20142023', scale: 30, region: geometry, maxPixels: 1e13});
 
