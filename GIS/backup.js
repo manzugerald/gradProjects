@@ -274,7 +274,7 @@ print('Composite 2014-2023 Bands:', composite20142023.bandNames()); // Print ban
 print('Simulated 2033 Bands:', result1994_2023.composite.bandNames()); // Print bands in simulated 2033 composite
 print('Composite 2014-2023 (sample):', composite20142023.reduceRegion({reducer: ee.Reducer.mean(), geometry: geometry, scale: 30, tileScale: 15, maxPixels: 1e13})); // Sample 2014-2023 values
 print('Simulated 2033 (sample):', result1994_2023.composite.reduceRegion({reducer: ee.Reducer.mean(), geometry: geometry, scale: 30, tileScale: 15, maxPixels: 1e13})); // Sample 2033 values
-print('Growth Rates 2023-2033 (sq km/year):', growthRates2033); // Print predicted growth rates
+print('Growth Rates 2024-2033 (sq km/year):', growthRates2033); // Print predicted growth rates
 
 // Confusion Matrix and Chart Feeds Section
 // Function to classify and generate confusion matrix without adding redundant layers
@@ -348,10 +348,6 @@ var yTicks = ee.List.sequence(0, maxArea, maxArea.divide(5)); // Y-axis ticks
 var minY = Math.min.apply(null, yTicks) * 0.95; // Slightly below min for buffer
 var maxY = Math.max.apply(null, yTicks) * 1.05; // Slightly above max for buffer
 
-
-
-
-
 // Create a time series line chart of land cover areas
 var timeSeriesChart = ui.Chart.feature.byFeature({
   features: allAreasCollection, 
@@ -361,14 +357,14 @@ var timeSeriesChart = ui.Chart.feature.byFeature({
   .setChartType('LineChart')
   .setOptions({
     title: 'Land Cover Area Over Time (1994-2033)', 
-    titleTextStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 28 to 32
+    titleTextStyle: {color: '#000000', fontSize: 36, bold: true}, // Increased from 32 to 36
     titlePosition: 'center', 
     height: '400px', 
-    width: '600px',
+    width: '400px',
     hAxis: {
       title: 'Year', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true}, // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true}, // Increased from 24 to 29
       format: '####', 
       ticks: ['2003', '2008', '2013', 2018, 2023, 2028, 2033], 
       slantedText: true, 
@@ -376,23 +372,23 @@ var timeSeriesChart = ui.Chart.feature.byFeature({
     },
     vAxis: {
       title: 'Area (sq km)', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true}, // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true}, // Increased from 24 to 29
       format: 'decimal', 
       ticks: yTicks, 
       titleOffset: 20, 
       viewWindow: {min: minY, max: maxY}
     },
-    chartArea: {left: 100, top: 120, bottom: 100, width: '80%', height: '65%'},
+    chartArea: {left: 100, top: 160, bottom: 100, width: '80%', height: '65%'},
     legend: {
       position: 'top', 
-      textStyle: {color: '#000000', fontSize: 30, bold: true}, // Increased from 26 to 30
-      alignment: 'end', 
+      textStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 30 to 36
+      alignment: 'center', 
       maxLines: 1, 
       width: '100%'
     },
     colors: ['#6f2e01', '#c09272', '#c3f1d5', '#566e6b'], 
-    lineWidth: 10,
+    lineWidth: 15, 
     series: {
       0: {targetAxisIndex: 0, labelInLegend: 'Built-up Areas'},
       1: {targetAxisIndex: 0, labelInLegend: 'Bare Ground'},
@@ -407,6 +403,7 @@ Export.table.toDrive({
   folder: 'jubaPredictionNew/Charts', 
   fileFormat: 'CSV'
 }); // Export chart data
+
 // Prepare data for bar charts
 var barChartData = ee.FeatureCollection([
   ee.Feature(null, {year: '1994-2003', urban: areas2003.urban, bare: areas2003.bare, water: areas2003.water, vegetation: areas2003.vegetation}),
@@ -414,6 +411,7 @@ var barChartData = ee.FeatureCollection([
   ee.Feature(null, {year: '2014-2023', urban: areas20142023.urban, bare: areas20142023.bare, water: areas20142023.water, vegetation: areas20142023.vegetation}),
   ee.Feature(null, {year: '2024-2033', urban: areas2033.urban, bare: areas2033.bare, water: areas2033.water, vegetation: areas2033.vegetation})
 ]);
+
 // Create a column bar chart
 var barChart = ui.Chart.feature.byFeature({
   features: barChartData, 
@@ -423,32 +421,32 @@ var barChart = ui.Chart.feature.byFeature({
   .setChartType('ColumnChart')
   .setOptions({
     title: 'Land Cover Areas: 1994-2003, 2004-2013, 2014-2023, 2024-2033', 
-    titleTextStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 28 to 32
+    titleTextStyle: {color: '#000000', fontSize: 36, bold: true}, // Increased from 32 to 36
     titlePosition: 'center', 
     height: '400px', 
-    width: '600px',
+    width: '1200px',
     hAxis: {
       title: 'Period', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true}, // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true}, // Increased from 24 to 29
       ticks: ['1994-2003', '2004-2013', '2014-2023', '2024-2033'], 
-      slantedText: true, 
-      slantedTextAngle: 30
+      slantedText: false, 
+      // slantedTextAngle: 45 
     },
     vAxis: {
       title: 'Area (sq km)', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true}, // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true}, // Increased from 24 to 29
       format: 'decimal', 
       ticks: yTicks, 
       titleOffset: 20, 
       viewWindow: {min: minY, max: maxY}
     },
-    chartArea: {left: 100, top: 120, bottom: 100, width: '80%', height: '65%'},
+    chartArea: {left: 100, top: 160, bottom: 100, width: '80%', height: '65%'},
     legend: {
       position: 'top', 
-      textStyle: {color: '#000000', fontSize: 30, bold: true}, // Increased from 26 to 30
-      alignment: 'end', 
+      textStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 30 to 36
+      alignment: 'center', 
       maxLines: 1, 
       width: '100%'
     },
@@ -468,6 +466,7 @@ Export.table.toDrive({
   folder: 'jubaPredictionNew/Charts', 
   fileFormat: 'CSV'
 }); // Export chart data
+
 // Create a stacked bar chart
 var stackedBarChart = ui.Chart.feature.byFeature({
   features: barChartData, 
@@ -477,31 +476,31 @@ var stackedBarChart = ui.Chart.feature.byFeature({
   .setChartType('ColumnChart')
   .setOptions({
     title: 'Stacked Land Cover Areas: 1994-2003, 2004-2013, 2014-2023, 2024-2033', 
-    titleTextStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 28 to 32
+    titleTextStyle: {color: '#000000', fontSize: 36, bold: true}, // Increased from 32 to 36
     titlePosition: 'center', 
     height: '400px', 
     width: '600px',
     hAxis: {
       title: 'Period', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true}, // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true}, // Increased from 24 to 29
       ticks: ['1994-2003', '2004-2013', '2014-2023', '2024-2033'], 
-      slantedText: true, 
-      slantedTextAngle: 30
+      slantedText: false, 
+      // slantedTextAngle: 45 // Increased angle for better visibility
     },
     vAxis: {
       title: 'Area (sq km)', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true}, // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true}, // Increased from 24 to 29
       format: 'decimal', 
       ticks: yTicks, 
       titleOffset: 20, 
       viewWindow: {min: minY, max: maxY}
     },
-    chartArea: {left: 100, top: 120, bottom: 100, width: '80%', height: '65%'},
+    chartArea: {left: 100, top: 160, bottom: 100, width: '80%', height: '65%'},
     legend: {
       position: 'top', 
-      textStyle: {color: '#000000', fontSize: 30, bold: true}, // Increased from 26 to 30
+      textStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 30 to 36
       alignment: 'center', 
       maxLines: 1, 
       width: '100%'
@@ -523,6 +522,7 @@ Export.table.toDrive({
   folder: 'jubaPredictionNew/Charts', 
   fileFormat: 'CSV'
 }); // Export chart data
+
 // Function to create pie charts for land cover distribution
 function createPieChart(areas, period) {
   var urban = ee.Number(areas.urban || 0); // Ensure urban area is a number, default to 0 if null
@@ -551,17 +551,19 @@ function createPieChart(areas, period) {
     .setChartType('PieChart')
     .setOptions({
       title: 'Land Cover Distribution ' + period, 
-      titleTextStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 28 to 32
-      height: '400px', 
-      width: '600px',
-      chartArea: {top: 40, width: '50%'}, 
+      titleTextStyle: {color: '#000000', fontSize: 36, bold: true}, // Increased from 32 to 36
+      titlePosition: 'center',
+      height: '200px', 
+      width: '600px', 
+      chartArea: {top: 80, left: 300, width: '40%', height:'40%'}, 
       colors: ['#6f2e01', '#c09272', '#c3f1d5', '#566e6b'],
-      pieSliceTextStyle: {color: '#FFFFFF', fontSize: 28, bold: true}, // Increased from 24 to 28
+      pieSliceTextStyle: {color: '#FFFFFF', fontSize: 34, bold: true}, // Increased from 28 to 34
       legend: {
         position: 'left', 
         alignment: 'center', 
         width: '100%', 
-        textStyle: {color: '#000000', fontSize: 30, bold: true}, // Increased from 26 to 30
+        maxLines: 4,
+        textStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 30 to 36
         labels: labelsWithPercentages
       },
       slices: {
@@ -573,11 +575,13 @@ function createPieChart(areas, period) {
     });
   print(pieChart); // Display pie chart
 }
+
 // Generate pie charts for each period
 createPieChart(areas2003, '1994-2003');
 createPieChart(areas2013, '2004-2013');
 createPieChart(areas20142023, '2014-2023');
 createPieChart(areas2033, '2024-2033');
+
 // Create a bar chart of growth rates for 2023-2033
 var growthRateChart = ui.Chart.array.values({
   array: ee.List([growthRates2033.urban, growthRates2033.bare, growthRates2033.water, growthRates2033.vegetation]), 
@@ -586,23 +590,25 @@ var growthRateChart = ui.Chart.array.values({
 })
   .setChartType('ColumnChart')
   .setOptions({
-    title: 'Land Cover Growth Rates (2023-2033)', 
-    titleTextStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 28 to 32
+    title: 'Land Cover Growth Rates (2024-2033)', 
+    titleTextStyle: {color: '#000000', fontSize: 36, bold: true}, // Increased from 32 to 36
     titlePosition: 'center',
     height: '400px', 
-    width: '600px',
+    width: '800px', // Increased from 600px to 800px to prevent x-tick cutoff
     hAxis: {
       title: 'Land Cover Class', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true}, // Increased from 20 to 24
-      ticks: ['Built-up Areas', 'Bare Ground', 'Surface Water', 'Vegetative Cover']
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true}, // Increased from 24 to 29
+      ticks: ['Built-up Areas', 'Bare Ground', 'Surface Water', 'Vegetative Cover'],
+      slantedText: false, // Added slanted text to ensure full visibility
+      // slantedTextAngle: 45 // Added angle for better visibility
     },
     vAxis: {
       title: 'Growth Rate (sq km/year)', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true}, // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true}, // Increased from 24 to 29
       format: 'decimal', 
-      ticks: [-10, -5, 0, 5, 10, 15, 20]
+      ticks: [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
     },
     chartArea: {left: 100, top: 120, bottom: 100, width: '80%', height: '65%'},
     legend: {position: 'none'}, 
@@ -623,6 +629,7 @@ Export.table.toDrive({
   folder: 'jubaPredictionNew/Charts', 
   fileFormat: 'CSV'
 }); // Export chart data
+
 // Create confusion matrix charts
 var cmChart19942003 = ui.Chart.array.values({
   array: cm19942003.array(), 
@@ -632,22 +639,23 @@ var cmChart19942003 = ui.Chart.array.values({
   .setChartType('Table')
   .setOptions({
     title: 'Confusion Matrix (1994-2003)', 
-    titleTextStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 28 to 32
+    titleTextStyle: {color: '#000000', fontSize: 36, bold: true}, // Increased from 32 to 36
     titlePosition: 'center',
     height: '400px', 
     width: '600px',
     hAxis: {
       title: 'Predicted', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true} // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true} // Increased from 24 to 29
     }, 
     vAxis: {
       title: 'Actual', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true} // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true} // Increased from 24 to 29
     }
   });
 print(cmChart19942003); // Display 1994-2003 confusion matrix
+
 var cmChart20042013 = ui.Chart.array.values({
   array: cm20042013.array(), 
   axis: 0, 
@@ -656,22 +664,23 @@ var cmChart20042013 = ui.Chart.array.values({
   .setChartType('Table')
   .setOptions({
     title: 'Confusion Matrix (2004-2013)', 
-    titleTextStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 28 to 32
+    titleTextStyle: {color: '#000000', fontSize: 36, bold: true}, // Increased from 32 to 36
     titlePosition: 'center',
     height: '400px', 
     width: '600px',
     hAxis: {
       title: 'Predicted', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true} // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true} // Increased from 24 to 29
     }, 
     vAxis: {
       title: 'Actual', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true} // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true} // Increased from 24 to 29
     }
   });
 print(cmChart20042013); // Display 2004-2013 confusion matrix
+
 var cmChart20142023 = ui.Chart.array.values({
   array: result20142023.confusionMatrix.array(), 
   axis: 0, 
@@ -680,22 +689,23 @@ var cmChart20142023 = ui.Chart.array.values({
   .setChartType('Table')
   .setOptions({
     title: 'Confusion Matrix (2014-2023)', 
-    titleTextStyle: {color: '#000000', fontSize: 32, bold: true}, // Increased from 28 to 32
+    titleTextStyle: {color: '#000000', fontSize: 36, bold: true}, // Increased from 32 to 36
     titlePosition: 'center',
     height: '400px', 
     width: '600px',
     hAxis: {
       title: 'Predicted', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true} // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true} // Increased from 24 to 29
     }, 
     vAxis: {
       title: 'Actual', 
-      titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, // Increased from 24 to 28
-      textStyle: {color: '#000000', fontSize: 24, bold: true} // Increased from 20 to 24
+      titleTextStyle: {color: '#000000', fontSize: 34, bold: true}, // Increased from 28 to 34
+      textStyle: {color: '#000000', fontSize: 29, bold: true} // Increased from 24 to 29
     }
   });
 print(cmChart20142023); // Display 2014-2023 confusion matrix
+
 // Export all confusion matrices as a CSV
 Export.table.toDrive({
   collection: ee.FeatureCollection([
@@ -707,191 +717,3 @@ Export.table.toDrive({
   folder: 'jubaPredictionNew/Charts', 
   fileFormat: 'CSV'
 }); // Export chart data
-
-
-
-
-
-
-
-
-
-
-// // Create a time series line chart of land cover areas
-// var timeSeriesChart = ui.Chart.feature.byFeature({features: allAreasCollection, xProperty: 'year', yProperties: ['urban', 'bare', 'water', 'vegetation']})
-//   .setChartType('LineChart')
-//   .setOptions({
-//     title: 'Land Cover Area Over Time (1994-2033)', 
-//     titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, 
-//     titlePosition: 'center', 
-//     height: '400px', 
-//     width: '600px',
-//     hAxis: {title: 'Year', titleTextStyle: {color: '#000000', fontSize: 24, bold: true}, textStyle: {color: '#000000', fontSize: 20, bold: true}, format: '####', ticks: ['2003', '2008', '2013', 2018, 2023, 2028, 2033], slantedText: true, slantedTextAngle: 30},
-//     vAxis: {title: 'Area (sq km)', titleTextStyle: {color: '#000000', fontSize: 24, bold: true}, textStyle: {color: '#000000', fontSize: 20, bold: true}, format: 'decimal', ticks: yTicks, titleOffset: 20, viewWindow: {min: minY, max: maxY}},
-//     chartArea: {left: 100, top: 120, bottom: 100, width: '80%', height: '65%'},
-//     legend: {position: 'top', textStyle: {color: '#000000', fontSize: 26, bold: true}, alignment: 'end', maxLines: 1, width: '100%'},
-//     colors: ['#6f2e01', '#c09272', '#c3f1d5', '#566e6b'], 
-//     lineWidth: 10
-//   });
-// print(timeSeriesChart); // Display chart
-// Export.table.toDrive({collection: allAreasCollection, description: 'Time_Series_Data_1994_2033', folder: 'jubaPredictionNew/Charts', fileFormat: 'CSV'}); // Export chart data
-
-// // Prepare data for bar charts
-// var barChartData = ee.FeatureCollection([
-//   ee.Feature(null, {year: '1994-2003', urban: areas2003.urban, bare: areas2003.bare, water: areas2003.water, vegetation: areas2003.vegetation}),
-//   ee.Feature(null, {year: '2004-2013', urban: areas2013.urban, bare: areas2013.bare, water: areas2013.water, vegetation: areas2013.vegetation}),
-//   ee.Feature(null, {year: '2014-2023', urban: areas20142023.urban, bare: areas20142023.bare, water: areas20142023.water, vegetation: areas20142023.vegetation}),
-//   ee.Feature(null, {year: '2024-2033', urban: areas2033.urban, bare: areas2033.bare, water: areas2033.water, vegetation: areas2033.vegetation})
-// ]);
-
-// // Create a column bar chart
-// var barChart = ui.Chart.feature.byFeature({features: barChartData, xProperty: 'year', yProperties: ['urban', 'bare', 'water', 'vegetation']})
-//   .setChartType('ColumnChart')
-//   .setOptions({
-//     title: 'Land Cover Areas: 1994-2003, 2004-2013, 2014-2023, 2024-2033', 
-//     titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, 
-//     titlePosition: 'center', 
-//     height: 300, 
-//     width: 600,
-//     hAxis: {title: 'Period', titleTextStyle: {color: '#000000', fontSize: 24, bold: true}, textStyle: {color: '#000000', fontSize: 20, bold: true}, ticks: ['1994-2003', '2004-2013', '2014-2023', '2024-2033'], slantedText: true, slantedTextAngle: 30},
-//     vAxis: {title: 'Area (sq km)', titleTextStyle: {color: '#000000', fontSize: 24, bold: true}, textStyle: {color: '#000000', fontSize: 20, bold: true}, format: 'decimal', ticks: yTicks, titleOffset: 20, viewWindow: {min: minY, max: maxY}},
-//     chartArea: {left: 100, top: 120, bottom: 100, width: '80%', height: '65%'},
-//     legend: {position: 'top', textStyle: {color: '#000000', fontSize: 26, bold: true}, alignment: 'end', maxLines: 1, width: '100%'},
-//     colors: ['#6f2e01', '#c09272', '#c3f1d5', '#566e6b'], 
-//     bar: {groupWidth: '85%'}
-//   });
-// print(barChart); // Display chart
-// Export.table.toDrive({collection: barChartData, description: 'Bar_Chart_Data_1994_2033', folder: 'jubaPredictionNew/Charts', fileFormat: 'CSV'}); // Export chart data
-
-// // Create a stacked bar chart
-// var stackedBarChart = ui.Chart.feature.byFeature({features: barChartData, xProperty: 'year', yProperties: ['urban', 'bare', 'water', 'vegetation']})
-//   .setChartType('ColumnChart')
-//   .setOptions({
-//     title: 'Stacked Land Cover Areas: 1994-2003, 2004-2013, 2014-2023, 2024-2033', 
-//     titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, 
-//     titlePosition: 'center', 
-//     height: 400, 
-//     width: 600,
-//     hAxis: {title: 'Period', titleTextStyle: {color: '#000000', fontSize: 24, bold: true}, textStyle: {color: '#000000', fontSize: 20, bold: true}, ticks: ['1994-2003', '2004-2013', '2014-2023', '2024-2033'], slantedText: true, slantedTextAngle: 30},
-//     vAxis: {title: 'Area (sq km)', titleTextStyle: {color: '#000000', fontSize: 24, bold: true}, textStyle: {color: '#000000', fontSize: 20, bold: true}, format: 'decimal', ticks: yTicks, titleOffset: 20, viewWindow: {min: minY, max: maxY}},
-//     chartArea: {left: 100, top: 120, bottom: 100, width: '80%', height: '65%'},
-//     legend: {position: 'top', textStyle: {color: '#000000', fontSize: 26, bold: true}, alignment: 'center', maxLines: 1, width: '100%'},
-//     isStacked: true, 
-//     colors: ['#6f2e01', '#c09272', '#c3f1d5', '#566e6b'], 
-//     bar: {groupWidth: '85%'}
-//   });
-// print(stackedBarChart); // Display chart
-// Export.table.toDrive({collection: barChartData, description: 'Stacked_Bar_Chart_Data_1994_2033', folder: 'jubaPredictionNew/Charts', fileFormat: 'CSV'}); // Export chart data
-
-// // Function to create pie charts for land cover distribution
-// function createPieChart(areas, period) {
-//   var urban = ee.Number(areas.urban || 0); // Ensure urban area is a number, default to 0 if null
-//   var bare = ee.Number(areas.bare || 0); // Bare area
-//   var water = ee.Number(areas.water || 0); // Water area
-//   var vegetation = ee.Number(areas.vegetation || 0); // Vegetation area
-//   var total = urban.add(bare).add(water).add(vegetation); // Total area
-//   // Calculate percentages for each class, default to 0 if total is 0
-//   var urbanPercentage = total.gt(0) ? urban.divide(total).multiply(100) : ee.Number(0);
-//   var barePercentage = total.gt(0) ? bare.divide(total).multiply(100) : ee.Number(0);
-//   var waterPercentage = total.gt(0) ? water.divide(total).multiply(100) : ee.Number(0);
-//   var vegetationPercentage = total.gt(0) ? vegetation.divide(total).multiply(100) : ee.Number(0);
-//   // Create labels with percentages
-//   var labelsWithPercentages = [
-//     'Urban ' + urbanPercentage.format('%.1f').getInfo() + '%',
-//     'Bare ' + barePercentage.format('%.1f').getInfo() + '%',
-//     'Water ' + waterPercentage.format('%.1f').getInfo() + '%',
-//     'Vegetation ' + vegetationPercentage.format('%.1f').getInfo() + '%'
-//   ];
-//   // Define pie chart
-//   var pieChart = ui.Chart.array.values({array: ee.List([urban, bare, water, vegetation]), axis: 0, xLabels: labelsWithPercentages})
-//     .setChartType('PieChart')
-//     .setOptions({
-//       title: 'Land Cover Distribution ' + period, 
-//       titleTextStyle: {color: '#000000', fontSize: 28, bold: true}, 
-//       height: '200px', 
-//       width: '200px',
-//       chartArea: {top: 40, width: '50%'}, 
-//       colors: ['#6f2e01', '#c09272', '#c3f1d5', '#566e6b'],
-//       pieSliceTextStyle: {color: '#FFFFFF', fontSize: 24, bold: true},
-//       legend: {position: 'left', alignment: 'center', width: '100%', textStyle: {color: '#000000', fontSize: 26, bold: true}, labels: labelsWithPercentages},
-//       slices: {0: {textStyle: {angle: 45}}, 1: {textStyle: {angle: 45}}, 2: {textStyle: {angle: 45}}, 3: {textStyle: {angle: 45}}}
-//     });
-//   print(pieChart); // Display pie chart
-// }
-
-// // Generate pie charts for each period
-// createPieChart(areas2003, '1994-2003');
-// createPieChart(areas2013, '2004-2013');
-// createPieChart(areas20142023, '2014-2023');
-// createPieChart(areas2033, '2024-2033');
-
-// // Create a bar chart of growth rates for 2023-2033
-// var growthRateChart = ui.Chart.array.values({
-//   array: ee.List([growthRates2033.urban, growthRates2033.bare, growthRates2033.water, growthRates2033.vegetation]), 
-//   axis: 0, 
-//   xLabels: ['Urban', 'Bare', 'Water', 'Vegetation']
-// })
-//   .setChartType('ColumnChart')
-//   .setOptions({
-//     title: 'Land Cover Growth Rates (2023-2033)',
-//     height: '400px', 
-//     width: '600px',
-//     hAxis: {title: 'Land Cover Class', titleTextStyle: {color: '#000000', fontSize: 18}, textStyle: {color: '#000000', fontSize: 14}, ticks: ['Urban', 'Bare', 'Water', 'Vegetation']},
-//     vAxis: {title: 'Growth Rate (sq km/year)', titleTextStyle: {color: '#000000', fontSize: 18}, textStyle: {color: '#000000', fontSize: 14}, format: 'decimal', ticks: [-10, -5, 0, 5, 10, 15, 20]},
-//     legend: {position: 'none'}, 
-//     colors: ['#6f2e01', '#c09272', '#c3f1d5', '#566e6b'], 
-//     bar: {groupWidth: '80%'}
-//   });
-// print(growthRateChart); // Display chart
-// Export.table.toDrive({
-//   collection: ee.FeatureCollection([ee.Feature(null, {'Urban': growthRates2033.urban, 'Bare': growthRates2033.bare, 'Water': growthRates2033.water, 'Vegetation': growthRates2033.vegetation})]), 
-//   description: 'Growth_Rate_Data_2023_2033',
-//   folder: 'jubaPredictionNew/Charts', 
-//   fileFormat: 'CSV'
-// }); // Export chart data
-
-// // Create confusion matrix charts
-// var cmChart19942003 = ui.Chart.array.values({array: cm19942003.array(), axis: 0, xLabels: ['Urban', 'Bare', 'Water', 'Vegetation']})
-//   .setChartType('Table')
-//   .setOptions({
-//     title: 'Confusion Matrix (1994-2003)', 
-//     height: '300px', 
-//     width: '300px', 
-//     hAxis: {title: 'Predicted', titleTextStyle: {color: '#000000', fontSize: 18}, textStyle: {color: '#000000', fontSize: 14}}, 
-//     vAxis: {title: 'Actual', titleTextStyle: {color: '#000000', fontSize: 18}, textStyle: {color: '#000000', fontSize: 14}}
-//   });
-// print(cmChart19942003); // Display 1994-2003 confusion matrix
-
-// var cmChart20042013 = ui.Chart.array.values({array: cm20042013.array(), axis: 0, xLabels: ['Urban', 'Bare', 'Water', 'Vegetation']})
-//   .setChartType('Table')
-//   .setOptions({
-//     title: 'Confusion Matrix (2004-2013)', 
-//     height: '300px', 
-//     width: '300px', 
-//     hAxis: {title: 'Predicted', titleTextStyle: {color: '#000000', fontSize: 18}, textStyle: {color: '#000000', fontSize: 14}}, 
-//     vAxis: {title: 'Actual', titleTextStyle: {color: '#000000', fontSize: 18}, textStyle: {color: '#000000', fontSize: 14}}
-//   });
-// print(cmChart20042013); // Display 2004-2013 confusion matrix
-
-// var cmChart20142023 = ui.Chart.array.values({array: result20142023.confusionMatrix.array(), axis: 0, xLabels: ['Urban', 'Bare', 'Water', 'Vegetation']})
-//   .setChartType('Table')
-//   .setOptions({
-//     title: 'Confusion Matrix (2014-2023)', 
-//     height: '300px', 
-//     width: '300px', 
-//     hAxis: {title: 'Predicted', titleTextStyle: {color: '#000000', fontSize: 18}, textStyle: {color: '#000000', fontSize: 14}}, 
-//     vAxis: {title: 'Actual', titleTextStyle: {color: '#000000', fontSize: 18}, textStyle: {color: '#000000', fontSize: 14}}
-//   });
-// print(cmChart20142023); // Display 2014-2023 confusion matrix
-
-// // Export all confusion matrices as a CSV
-// Export.table.toDrive({
-//   collection: ee.FeatureCollection([
-//     ee.Feature(null, {matrix: cm19942003.array(), period: '1994-2003'}),
-//     ee.Feature(null, {matrix: cm20042013.array(), period: '2004-2013'}),
-//     ee.Feature(null, {matrix: result20142023.confusionMatrix.array(), period: '2014-2023'})
-//   ]), 
-//   description: 'Confusion_Matrices_1994_2023', 
-//   folder: 'jubaPredictionNew/Charts', 
-//   fileFormat: 'CSV'
-// });
